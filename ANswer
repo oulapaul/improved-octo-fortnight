@@ -1,0 +1,136 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Chatbot</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: orangered;  
+            margin: 0;  
+            padding: 20px;  
+        }  
+
+        #chat-container {  
+            max-width: 600px;  
+            margin: 0 auto;  
+            background: green;  
+            border-radius: 10px;  
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);  
+            overflow: hidden;  
+        }  
+
+        #messages {  
+            padding: 20px;  
+            height: 400px;  
+            overflow-y: auto;  
+            background: #0a3c6e;  
+            border-bottom: 1px solid #ccc;  
+        }  
+
+        .message {  
+            margin: 10px 0;  
+        }  
+
+        .user-message {  
+            text-align: right;  
+        }  
+
+        .user-message .text {  
+            background-color: white;  
+            color: blueviolet;  
+            padding: 10px;  
+            border-radius: 10px;  
+            display: inline-block;  
+            max-width: 80%;  
+        }  
+
+        .bot-message .text {  
+            background-color: #007BFF;  
+            color: white;  
+            padding: 10px;  
+            border-radius: 10px;  
+            display: inline-block;  
+            max-width: 80%;  
+        }  
+
+        #input-area {  
+            display: flex;  
+            padding: 10px;  
+        }  
+
+        #user-input {  
+            flex: 1;  
+            padding: 10px;  
+            border: 1px solid #ccc;  
+            border-radius: 5px;  
+        }  
+
+        #send-button {  
+            padding: 10px 15px;  
+            margin-left: 10px;  
+            border: none;  
+            border-radius: 5px;  
+            background-color: #007BFF;  
+            color: white;  
+            cursor: pointer;  
+            transition: background-color 0.3s;  
+        }  
+
+        #send-button:hover {  
+            background-color: #0056b3;  
+        }  
+    </style>  
+</head>  
+<body>  
+
+<div id="chat-container">  
+    <div id="messages"></div>  
+    <div id="input-area">  
+        <input type="text" id="user-input" placeholder="Type a message..." />  
+        <button id="send-button">Send</button>  
+    </div>  
+</div>  
+
+<script>  
+    const messagesDiv = document.getElementById('messages');  
+    const userInput = document.getElementById('user-input');  
+    const sendButton = document.getElementById('send-button');  
+
+    sendButton.addEventListener('click', () => {  
+        const userMessage = userInput.value.trim();  
+        if (userMessage === "") return;  
+
+        // Append user message  
+        appendMessage('user', userMessage);  
+        userInput.value = "";  
+        
+        // Simulate bot response  
+        setTimeout(() => {  
+            appendMessage('bot', generateBotResponse(userMessage));  
+        }, 1000);  
+    });  
+
+    userInput.addEventListener('keypress', (e) => {  
+        if (e.key === 'Enter') {  
+            sendButton.click();  
+        }  
+    });  
+
+    function appendMessage(sender, text) {  
+        const messageDiv = document.createElement('div');  
+        messageDiv.classList.add('message', sender + '-message');  
+        messageDiv.innerHTML = `<div class="text">${text}</div>`;  
+        messagesDiv.appendChild(messageDiv);  
+        messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll  
+    }  
+
+    function generateBotResponse(message) {  
+        // Simple bot logic (you can extend this)  
+        return `You said: "${message}". How can I help you further?`;  
+    }  
+</script>  
+
+</body>  
+</html>
